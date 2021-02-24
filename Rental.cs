@@ -14,6 +14,7 @@ namespace Movies_Rental
 
     public partial class Rental : Form
     {
+        Return R = new Return();
         Database db = new Database(); //Database conncetion from database class
         string RMID;
         public Rental()
@@ -84,8 +85,10 @@ namespace Movies_Rental
 
         private void dgvcCustomer_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int index = e.RowIndex;
+            DataGridViewRow row = dgvRentalMovie.Rows[index];
 
-            if (e.ColumnIndex == dgvRentalMovie.Columns["update"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dgvRentalMovie.Rows[index].Index && e.RowIndex >= 0)
             {
                 db.Mode = false;
                 db.sql = "select * from RentedMovies where RMID = '" + RMID + "' ";
@@ -120,7 +123,8 @@ namespace Movies_Rental
                 if (result == DialogResult.No)
                 {
                     // cancel the closure of the form.
-                    load();
+                    R.Show();
+                   
                 }
                 db.con.Close();
 
@@ -238,7 +242,7 @@ namespace Movies_Rental
 
         private void btnReturm_Click(object sender, EventArgs e)
         {
-            Return R = new Return();
+            
             R.Show();
             this.Hide();
 
